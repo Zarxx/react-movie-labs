@@ -8,7 +8,7 @@ import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
-
+import Upcoming from './pages/upcoming';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +28,7 @@ const App = () => {
         <SiteHeader />
         <Routes>
           <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-          {/* <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} /> */}
+          <Route path="/movies/upcoming" element={<Upcoming />} /> 
           <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
           <Route path="/movies/:id" element={<MoviePage />} />
           <Route path="/" element={<HomePage />} />

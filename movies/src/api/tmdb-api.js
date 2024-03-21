@@ -11,6 +11,30 @@ export const getMovies = () => {
      throw error
   });
 };
+
+
+export const getUpcoming = () => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json'
+    }
+  };
+
+  return fetch(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=f4f06b44f097d50bc065937344408b11&language=en-US&page=1`,
+    options
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
   
 export const getMovie = (args) => {
    console.log(args)

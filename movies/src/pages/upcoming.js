@@ -1,40 +1,33 @@
-import React, { useState, useEffect } from "react";
-import PageTemplate from "../components/templateMovieListPage";
-import axios from 'axios';
+import React from "react";
+import { getUpcoming } from "../api/tmdb-api";
+import PageTemplate from '../components/templateMovieListPage';
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
 
-const options = {
-  method: 'GET',
-  url: 'https://api.themoviedb.org/3/movie/upcoming',
-  params: {language: 'en-US', page: '1'},
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer f4f06b44f097d50bc065937344408b11'
+const Upcoming = (props) => {
+
+  const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcoming)
+
+  if (isLoading) {
+    return <Spinner />
   }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const movies = data.results;
+
+  // Redundant, but necessary to avoid app crashing.
+  const favorites = movies.filter(m => m.favorite)
+  localStorage.setItem('favorites', JSON.stringify(favorites))
+  const addToFavorites = (movieId) => true 
+
+  return (
+    <PageTemplate
+      title='Upcoming Movies'
+      movies={movies}
+      selectFavorite={addToFavorites}
+    />
+  );
 };
-
-axios
-  .request(options)
-  .then(function (response) {
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-
-
-
-const FavoriteMoviesPage = (props) => {
-    const toDo = () => true;
-    // Get movies from local storage.
-    const movies = JSON.parse(localStorage.getItem("favorites")); 
-  
-    return (
-      <PageTemplate
-        title="Upcoming Movies"
-        movies={movies}
-        selectFavorite={toDo}
-      />
-    );
-  };
-
-export default upcoming;
+export default Upcoming;
