@@ -15,9 +15,10 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 export default function MovieCard({ movie, action }) { 
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { favorites, addToFavorites, addToMustWatch } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -30,7 +31,11 @@ export default function MovieCard({ movie, action }) {
     addToFavorites(movie);
   };
 
-
+  const handleAddToMustWatch = (e) => {
+    e.preventDefault();
+    addToMustWatch(movie);
+    console.log(`Added "${movie.title}" to Must Watch.`);
+  };
 
 
 
@@ -81,6 +86,12 @@ export default function MovieCard({ movie, action }) {
             More Info ...
           </Button>
         </Link>
+        <IconButton
+          aria-label="add to must watch"
+          onClick={handleAddToMustWatch}
+        >
+          <PlaylistAddIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );
