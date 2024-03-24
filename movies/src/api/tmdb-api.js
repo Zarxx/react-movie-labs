@@ -14,7 +14,7 @@ export const getMovies = () => {
 
 export const getPopularMovies = () => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=f4f06b44f097d50bc065937344408b11&language=en-US&page=1`
+    `https://api.themoviedb.org/3/movie/popular?api_key=f4f06b44f097d50bc065937344408b11`
   )
     .then((response) => {
       if (!response.ok) {
@@ -78,12 +78,12 @@ export const getMovie = (args) => {
   
   export const getMovieImages = ({ queryKey }) => {
     const [, idPart] = queryKey;
-    const { id } = idPart;
+    const id = idPart.id;
     return fetch(
       `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
     ).then( (response) => {
       if (!response.ok) {
-        throw new Error(response.json().message);
+        throw new Error(response.statusText);
       }
       return response.json();
   
