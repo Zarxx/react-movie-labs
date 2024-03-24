@@ -33,8 +33,12 @@ export default function MovieCard({ movie, action }) {
 
   const handleAddToMustWatch = (e) => {
     e.preventDefault();
+    if (movie && movie.id) {
     addToMustWatch(movie);
     console.log(`Added "${movie.title}" to Must Watch.`);
+  } else {
+    console.error('Invalid movie object:', movie);
+  }
   };
 
 

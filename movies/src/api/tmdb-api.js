@@ -12,6 +12,22 @@ export const getMovies = () => {
   });
 };
 
+export const getPopularMovies = () => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=f4f06b44f097d50bc065937344408b11&language=en-US&page=1`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw new Error(error.message); 
+    });
+};
+
+
 
 export const getUpcoming = () => {
   return fetch(
