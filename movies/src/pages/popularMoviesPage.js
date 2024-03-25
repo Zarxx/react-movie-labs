@@ -5,9 +5,10 @@ import { getPopularMovies } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 
 
-const PopularMoviesPage = () => {
+const PopularMoviesPage = (props) => {
 //fetching populkar movies data
 const { data, error, isLoading, isError } = useQuery('popular', getPopularMovies);
+
 
     if (isLoading) {
         return <Spinner />;
@@ -22,16 +23,13 @@ const { data, error, isLoading, isError } = useQuery('popular', getPopularMovies
 
 
 
-  
-  
-
-
       return (
         <PageTemplate
           title="Popular Movies"
           movies={movies}
+          
         />
       );
     };
-    
+
 export default PopularMoviesPage;
