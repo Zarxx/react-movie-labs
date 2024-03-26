@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "../headerMovieList";
-import FilterCard from "../filterMoviesCard";
+import FilterCard  from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 
@@ -8,18 +8,21 @@ function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
-
+  const [releaseYearFilter, setReleaseYearFilter] = useState("");
+  
   let displayedMovies = movies
-    .filter((m) => {
-      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-    });
+  .filter((m) => m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1)
+  .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true))
+  .filter((m) => (releaseYearFilter ? m.releaseYear === releaseYearFilter : true));
 
   const handleChange = (type, value) => {
-    if (type === "name") setNameFilter(value);
-    else setGenreFilter(value);
+    if (type === "name") {
+      setNameFilter(value);
+    } else if (type === "genre") {
+      setGenreFilter(value);
+    } else if (type === "releaseYear") {
+      setReleaseYearFilter(value);
+    }
   };
 
   return (
@@ -33,6 +36,9 @@ function MovieListPageTemplate({ movies, title, action }) {
             onUserInput={handleChange}
             titleFilter={nameFilter}
             genreFilter={genreFilter}
+            releaseYearFilter={releaseYearFilter}
+            setReleaseYearFilter={setReleaseYearFilter}
+            setGenreFilter={setGenreFilter}
           />
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>

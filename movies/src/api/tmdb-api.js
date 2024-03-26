@@ -16,6 +16,7 @@ export const getPopularMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}`
   )
+  
     .then((response) => {
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -118,3 +119,21 @@ export const getMovie = (args) => {
       throw new Error(error.message);
     });
   };
+
+
+  export const getReleaseYears = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch release years");
+        }
+        const data = await response.json();
+        const releaseYears = data.results.map(movie => movie.release_date.substring(0, 4));
+        const uniqueYears = [...new Set(releaseYears)];
+        return uniqueYears;
+      } catch (error) {
+        throw new Error("Error fetching release years: " + error.message);
+      }
+    };
