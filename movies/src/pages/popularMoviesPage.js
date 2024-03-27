@@ -1,35 +1,47 @@
 import React from "react";
-import PageTemplate from '../components/templateMovieListPage';
-import { useQuery } from 'react-query';
+import PageTemplate from "../components/templateMovieListPage";
+import { useQuery } from "react-query";
 import { getPopularMovies } from "../api/tmdb-api";
-import Spinner from '../components/spinner';
-
+import Spinner from "../components/spinner";
 
 const PopularMoviesPage = (props) => {
-//fetching populkar movies data
-const { data, error, isLoading, isError } = useQuery('popular', getPopularMovies);
+  //fetching populkar movies data
+  const { data, error, isLoading, isError } = useQuery(
+    "populars",
+    getPopularMovies
+  );
 
+  if (isLoading) {
+    console.log({
+      loading: "loding.",
+    });
+    return <Spinner />;
+  }
 
-    if (isLoading) {
-        return <Spinner />;
-      }
+  if (isError) {
+    return <h1>Error loading data: {error.message}</h1>;
+  }
+  console.log({
+    data,
+  });
 
-      if (isError) {
-        return <h1>Error loading data: {error.message}</h1>;
-      }
+  const movies = data.results;
 
-      const movies = data.results;
+  console.log({
+    movies,
+  });
 
-
-
-
-      return (
-        <PageTemplate
-          title="Popular Movies"
-          movies={movies}
-          
-        />
-      );
-    };
+  if (movies && movies.length > 0) {
+    return (
+      <PageTemplate
+        title="Popular Movies"
+        movies={movies}
+        action={(movie) => {}}
+      />
+    );
+  } else {
+    return <p>Failed to load popular movies</p>;
+  }
+};
 
 export default PopularMoviesPage;
