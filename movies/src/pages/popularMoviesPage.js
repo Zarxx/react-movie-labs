@@ -8,7 +8,12 @@ const PopularMoviesPage = (props) => {
   //fetching populkar movies data
   const { data, error, isLoading, isError } = useQuery(
     "populars",
-    getPopularMovies
+    getPopularMovies,
+    {
+      staleTime: 360000,
+      refetchInterval: 360000,
+      refetchOnWindowFocus: false,
+    }
   );
 
   if (isLoading) {

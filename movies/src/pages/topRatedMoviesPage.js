@@ -13,7 +13,12 @@ import Spinner from "../components/spinner";
 const TopRatedMoviesPage = (props) => {
   const { data, error, isLoading, isError } = useQuery(
     "toprated",
-    getTopRatedMovies
+    getTopRatedMovies,
+    {
+      staleTime: 360000,
+      refetchInterval: 360000,
+      refetchOnWindowFocus: false,
+    }
   );
 
   if (isLoading) {

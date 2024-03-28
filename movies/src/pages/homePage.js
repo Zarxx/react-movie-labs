@@ -6,7 +6,11 @@ import Spinner from "../components/spinner";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 
 const HomePage = (props) => {
-  const { data, error, isLoading, isError } = useQuery("discover", getMovies);
+  const { data, error, isLoading, isError } = useQuery("discover", getMovies, {
+    staleTime: 360000,
+    refetchInterval: 360000,
+    refetchOnWindowFocus: false,
+  });
 
   if (isLoading) {
     return <Spinner />;
@@ -23,7 +27,6 @@ const HomePage = (props) => {
   const addToFavorites = (movieId) => true;
 
   return (
-    // <MuButtons />
     <PageTemplate
       title="Discover Movies"
       movies={movies}
