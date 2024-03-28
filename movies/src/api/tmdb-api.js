@@ -47,7 +47,7 @@ export const getUpcoming = () => {
 
 export const getMovie = (args) => {
   console.log({
-    here: "here is loading...",
+    here: "loading...",
   });
   console.log(args);
   const [, idPart] = args.queryKey;
