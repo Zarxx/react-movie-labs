@@ -3,6 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import { getTopRatedMovies } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
+import MuSlider from "../components/mu-slider/MuSlider";
 
 //   const TopRatedMoviesPage = () => {
 //   const { data, error, isLoading, isError } = useQuery(
@@ -32,11 +33,14 @@ const TopRatedMoviesPage = (props) => {
   const movies = data.results;
 
   return (
-    <PageTemplate
-      title="Top Rated Movies"
-      movies={movies}
-      action={(movie) => {}}
-    />
+    <>
+      <PageTemplate
+        title="Top Rated Movies"
+        movies={movies}
+        action={(movie) => {}}
+      />
+      <MuSlider />
+    </>
   );
 };
 

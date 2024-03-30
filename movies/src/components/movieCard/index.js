@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,18 +12,21 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import img from '../../images/film-poster-placeholder.png'
-import Avatar from '@mui/material/Avatar';
+import img from "../../images/film-poster-placeholder.png";
+import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import MuRating from "../mu-rating/MuRating";
+import Check from "../mu-checkbox/Check";
 
-export default function MovieCard({ movie, action }) { 
-  const { favorites, addToFavorites, addToMustWatch } = useContext(MoviesContext);
+export default function MovieCard({ movie, action }) {
+  const { favorites, addToFavorites, addToMustWatch } =
+    useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
-    movie.favorite = false
+    movie.favorite = false;
   }
 
   const handleAddToFavorite = (e) => {
@@ -34,21 +37,19 @@ export default function MovieCard({ movie, action }) {
   const handleAddToMustWatch = (e) => {
     e.preventDefault();
     if (movie && movie.id) {
-    addToMustWatch(movie);
-    console.log(`Added "${movie.title}" to Must Watch.`);
-  } else {
-    console.error('Invalid movie object:', movie);
-  }
+      addToMustWatch(movie);
+      console.log(`Added "${movie.title}" to Must Watch.`);
+    } else {
+      console.error("Invalid movie object:", movie);
+    }
   };
-
-
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-       <CardHeader
+      <CardHeader
         avatar={
           movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
+            <Avatar sx={{ backgroundColor: "red" }}>
               <FavoriteIcon />
             </Avatar>
           ) : null
@@ -82,6 +83,11 @@ export default function MovieCard({ movie, action }) {
             </Typography>
           </Grid>
         </Grid>
+        <MuRating />
+        <p>
+          Have you seen this movie?
+          <Check />
+        </p>
       </CardContent>
       <CardActions disableSpacing>
         {action(movie)}

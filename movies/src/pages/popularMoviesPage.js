@@ -3,6 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import { getPopularMovies } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
+import MuSlider from "../components/mu-slider/MuSlider";
 
 const PopularMoviesPage = (props) => {
   //fetching populkar movies data
@@ -38,11 +39,14 @@ const PopularMoviesPage = (props) => {
 
   if (movies && movies.length > 0) {
     return (
-      <PageTemplate
-        title="Popular Movies"
-        movies={movies}
-        action={(movie) => {}}
-      />
+      <>
+        <PageTemplate
+          title="Popular Movies"
+          movies={movies}
+          action={(movie) => {}}
+        />
+        <MuSlider />
+      </>
     );
   } else {
     return <p>Failed to load popular movies</p>;

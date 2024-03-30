@@ -3,6 +3,7 @@ import { getUpcoming } from "../api/tmdb-api";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
+import MuSlider from "../components/mu-slider/MuSlider";
 
 const Upcoming = (props) => {
   const { data, error, isLoading, isError } = useQuery(
@@ -27,11 +28,14 @@ const Upcoming = (props) => {
   // Redundant, but necessary to avoid app crashing.
 
   return (
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      action={(movie) => {}}
-    />
+    <>
+      <PageTemplate
+        title="Upcoming Movies"
+        movies={movies}
+        action={(movie) => {}}
+      />
+      <MuSlider />
+    </>
   );
 };
 
